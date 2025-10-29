@@ -16,4 +16,30 @@ authRouter.post("/register", async (req, res) => {
     }
 })
 
+authRouter.post("/login", async (req, res) => {
+    const { idToken } = req.body
+    try {
+        if(!idToken){
+            res.status(400).send({ message: `Null or undefined idToken! 🔴` })
+        }
+        const decoded = await auth.verifyIdToken(idToken)
+        res.cookie("idToken", idToken, { hhtpOnly: true, secure: false })
+        res.status(200).send({ message: `Session logged successfully! 🟢` })
+
+    } catch (error) {
+        console.error(`Error login user! 🔴 ${error}`);
+        res.status(500).send({ message: `Error login user! 🔴 ${error}` })
+    }
+})
+
+authRouter.post("/logout", async (req, res) => {
+    try {
+        res.clearCookie("idToken")
+        res.status(200).send({ message: `Session destroyed succesfully! 🟢` })
+    } catch (error) {
+        console.error(`Error destroying session! 🔴 ${error}`);
+        res.status(500).send({ message: `Error destroying session! 🔴 ${error}` })
+    }
+})
+
 module.exports = authRouter
