@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser")
 const dbConnection = require("./config/mongoose")
 const contactRouter = require("./routes/contactRouter")
 const authRouter = require("./routes/authRoutes")
+const houseRouter = require("./routes/houseRouter")
 const app = express()
 const PORT = process.env.PORT
 
@@ -22,6 +23,7 @@ dbConnection()
 
 app.use(authRouter)
 app.use(contactRouter)
+app.use(houseRouter)
 
 app.use((req, res) => {
     res.send(`<h1>404 - Not Found</h1>`)
