@@ -6,15 +6,15 @@ const House = require("../models/ContactSchema")
 houseRouter.post("/createhouse", async (req, res) => {
     let { title, direction, operation, ubication, price, typeOfHouse, description, condition, ambients, bathrooms, years, taxes, covered, uncovered, area, imageUrl, maps } = req.body
     try {
-        if(!title || !direction || !operation || !ubication || !price || !typeOfHouse || !description || !condition || !ambients || !bathrooms || !years || !taxes || !covered || !uncovered || !area || !imageUrl, !maps){
-            res.status(404).send({ message: `All fields are required! 🔴` })
+        if(!title || !direction || !operation || !ubication || !price || !typeOfHouse || !description || !condition || !ambients || !bathrooms || !years || !taxes || !covered || !uncovered || !area || !imageUrl || !maps){
+            return res.status(404).send({ message: `All fields are required! 🔴` })
         }
         if(!Array.isArray(imageUrl)){
             imageUrl = [ imageUrl ]
         }
-        const newHouse = { title, direction, operation, ubication, price, typeOfHouse, description, condition, ambients, bathrooms, years, taxes, covered, uncovered, area, imageUrl, maps }
-        await House.create(newHouse)
-        res.status(200).send({ message: `New house created successfully! 🟢` })
+        const createdHouse = { title, direction, operation, ubication, price, typeOfHouse, description, condition, ambients, bathrooms, years, taxes, covered, uncovered, area, imageUrl, maps }
+        await House.create(createdHouse)
+        res.status(201).send({ message: `New house created successfully! 🟢`, house: createdHouse })
     } catch (error) {
         console.error(`Error creating new house! 🔴 ${error}`);
         res.status(500).send({ message: `Error creating new house! 🔴 ${error}` })
@@ -25,13 +25,13 @@ houseRouter.post("/createhouse", async (req, res) => {
 houseRouter.get("/houses", async (req, res) => {
     try {
         const houses = await House.find()
-        if(!houses){
+        if(houses.length === 0){
             return res.status(404).send({ message: `No houses avaliable in DB! 🔴` })
         }
         res.status(200).send(houses)
     } catch (error) {
-        console.error(`Error reding houses on DB! 🔴 ${error}`);
-        res.status(500).send({ message: `Error reding houses on DB! 🔴 ${error}` })
+        console.error(`Error reading houses on DB! 🔴 ${error}`);
+        res.status(500).send({ message: `Error reading houses on DB! 🔴 ${error}` })
     }
 })
 
@@ -82,7 +82,7 @@ houseRouter.put("/update/:id", async (req, res) => {
             maps: maps ?? house.maps
         }
         await House.findByIdAndUpdate(id, updatedHouse, { new: true })
-        res.status(200).send({ message: `House updated successfully! 🟢` })
+        res.status(200).send({ message: `House updated successfully! 🟢`, house: updatedHouse })
     } catch (error) {
         console.error(`Error updating houseg! 🔴 ${error}`);
         res.status(500).send({ message: `Error updating houseg! 🔴 ${error}` })
@@ -97,7 +97,7 @@ houseRouter.delete("/delete/:id", async (req, res) => {
         if(!houseId){
             return res.status(404).send({ message: `No house with ID: ${id} to delete in DB! 🔴` })
         }
-        res.status(200).send({ message: `House with ID: ${id} deleted successfully! 🟢` })
+        res.status(200).send({ message: `House with ID: ${id} deleted successfully! 🟢`, house: houseId })
     } catch (error) {
         console.error(`Error deleting house with ID: ${id} on DB! 🔴 ${error}`);
         res.status(500).send({ message: `Error deleting house with ID: ${id} on DB! 🔴 ${error}` })

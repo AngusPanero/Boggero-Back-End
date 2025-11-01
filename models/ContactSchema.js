@@ -18,7 +18,7 @@ const HouseSchema = new mongoose.Schema ({
         required: true
     },
     price: {// Principal
-        type: Number,
+        type: String,
         required: true
     },
     typeOfHouse: {// Principal
@@ -46,19 +46,19 @@ const HouseSchema = new mongoose.Schema ({
         required: true
     },
     taxes: { //Superficies y medidas
-        type: Number,
+        type: String,
         required: true
     },
     covered: { //Superficies y medidas
-        type: Number,
+        type: String,
         required: true
     },
     uncovered: { //Superficies y medidas
-        type: Number,
+        type: String,
         required: true
     },
     area: { //Superficies y medidas
-        type: Number,
+        type: String,
         required: true
     },
     imageUrl: {
