@@ -1,76 +1,46 @@
 const mongoose = require("mongoose")
 
-const HouseSchema = new mongoose.Schema ({
-    title: {// Principal
+const ContactSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        minlength: 3,      
+        maxlength: 30,
+        set: value => value.toUpperCase()
+    },
+    lastName: {
+        type: String,
+        required: true,
+        minlength: 3,      
+        maxlength: 30,
+        set: value => value.toUpperCase()
+    },
+    phone: {
         type: String,
         required: true
     },
-    direction: {// Principal
+    email: {
+        type: String,
+        minlength: 10,
+        maxlength: 60,
+        trim: true,
+        lowercase: true,
+        default: null,
+        required: true,
+        match: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
+    },
+    type: {
         type: String,
         required: true
     },
-    operation: {//Principal
+    comment: {
         type: String,
-        require: true
+        maxlength: 500,
+        trim: true,
+        required: false
     },
-    ubication: {// Principal
-        type: String,
-        required: true
-    },
-    price: {// Principal
-        type: String,
-        required: true
-    },
-    typeOfHouse: {// Principal
-        type: String,
-        required: true
-    },
-    description: {// descripcion
-        type: String,
-        required: true
-    },
-    condition: { //Basico
-        type: String,
-        required: true
-    },
-    ambients: { //Basico
-        type: String,
-        required: true
-    },
-    bathrooms: { //Basico
-        type: String,
-        required: true
-    },
-    years: { //Basico
-        type: String,
-        required: true
-    },
-    taxes: { //Superficies y medidas
-        type: String,
-        required: true
-    },
-    covered: { //Superficies y medidas
-        type: String,
-        required: true
-    },
-    uncovered: { //Superficies y medidas
-        type: String,
-        required: true
-    },
-    area: { //Superficies y medidas
-        type: String,
-        required: true
-    },
-    imageUrl: {
-        type: [String], // Si subo imágenes en string que eso esperaría si subo varias
-        required: true
-    },
-    maps: {
-        type: String,
-        required: true
-    }
 }, { timestamps: true })
 
-const House = mongoose.model("house", HouseSchema)
+const Contact = mongoose.model("contact", ContactSchema)
 
-module.exports = House
+module.exports = Contact

@@ -1,6 +1,6 @@
 const express = require("express")
 const houseRouter = express.Router()
-const House = require("../models/ContactSchema")
+const House = require("../models/HouseSchema")
 
 // Create
 houseRouter.post("/createhouse", async (req, res) => {
