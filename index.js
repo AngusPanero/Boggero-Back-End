@@ -7,6 +7,7 @@ const dbConnection = require("./config/mongoose")
 const contactRouter = require("./routes/contactRouter")
 const authRouter = require("./routes/authRoutes")
 const houseRouter = require("./routes/houseRouter")
+const openaiRouter = require("./routes/openaiRouter")
 const app = express()
 const PORT = process.env.PORT
 
@@ -24,6 +25,7 @@ dbConnection()
 app.use(authRouter)
 app.use(contactRouter)
 app.use(houseRouter)
+app.use(openaiRouter)
 
 app.use((req, res) => {
     res.send(`<h1>404 - Not Found</h1>`)
