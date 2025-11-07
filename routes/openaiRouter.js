@@ -27,7 +27,7 @@ openaiRouter.post("/chat", async (req, res) => {
                         - Sin inventar datos, si no sabés, decilo con claridad
                     `
                 },
-                ...messages // req.body
+                ...messages // req.body (Historial completo)
             ]
         })
         res.status(200).send({ reply: response.choices[0].message.content }) // Devuelvo la respuesta

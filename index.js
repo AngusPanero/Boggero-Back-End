@@ -8,6 +8,7 @@ const contactRouter = require("./routes/contactRouter")
 const authRouter = require("./routes/authRoutes")
 const houseRouter = require("./routes/houseRouter")
 const openaiRouter = require("./routes/openaiRouter")
+const mailRouter = require("./nodemailer/nodemailer")
 const app = express()
 const PORT = process.env.PORT
 
@@ -26,6 +27,7 @@ app.use(authRouter)
 app.use(contactRouter)
 app.use(houseRouter)
 app.use(openaiRouter)
+app.use(mailRouter)
 
 app.use((req, res) => {
     res.send(`<h1>404 - Not Found</h1>`)
