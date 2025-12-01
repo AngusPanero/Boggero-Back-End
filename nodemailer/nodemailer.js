@@ -18,7 +18,7 @@ mailRouter.post("/sendemail", async (req,res) => {
     const mailOptions = {
         from: process.env.EMAIL,
         to: process.env.EMAIL, // A dónde querés que llegue el Mail
-        subject: `Nueva Consulta e Una Propiedad`,
+        subject: `Nueva Consulta De Una Propiedad`,
         html: `
         <div style="
             background-color: #141414;
@@ -34,7 +34,7 @@ mailRouter.post("/sendemail", async (req,res) => {
                 🏠 Nueva Consulta de Propiedad
             </h1>
 
-            <p><strong>Nombre:</strong> ${name} ${lastName}</p>
+            <p><strong>Nombre:</strong> ${name.toUpperCase()} ${lastName.toUpperCase()}</p>
             <p><strong>Teléfono:</strong> ${phone}</p>
             <p><strong>Tipo de Operación:</strong> ${type}</p>
             <p><strong>Email:</strong> ${email.toUpperCase()}</p>

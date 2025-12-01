@@ -53,15 +53,15 @@ houseRouter.get("/house/:id", async (req, res) => {
 // Update
 houseRouter.put("/update/:id", async (req, res) => {
     const id = req.params.id
-    let { title, direction, operation, ubication, price, typeOfHouse, description, condition, ambients, bathrooms, years, taxes, covered, uncovered, area, imageUrl, maps } = req.body
+    let { title, direction, operation, ubication, price, typeOfHouse, description, condition, ambients, bathrooms, years, taxes, covered, uncovered, area, maps } = req.body
     try {
         const house = await House.findById(id)
         if(!house){
             return res.status(404).send({ message: `No house with ID: ${id} avaliable in DB! 🔴` })
         }
-        if(!Array.isArray(imageUrl)){
+        /* if(!Array.isArray(imageUrl)){
             imageUrl = [ imageUrl ]
-        }
+        } */
         const updatedHouse = {
             title: title ?? house.title,
             direction: direction ?? house.direction,
@@ -78,7 +78,7 @@ houseRouter.put("/update/:id", async (req, res) => {
             covered: covered ?? house.covered,
             uncovered: uncovered ?? house.uncovered,
             area: area ?? house.area,
-            imageUrl: imageUrl ?? house.imageUrl,
+            imageUrl: house.imageUrl,
             maps: maps ?? house.maps
         }
         await House.findByIdAndUpdate(id, updatedHouse, { new: true })
