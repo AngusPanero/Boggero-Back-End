@@ -16,7 +16,7 @@ app.use(urlencoded({ extended: true }))
 app.use(express.json())
 
 app.use(cors({
-    origin: ["http://127.0.0.1:5500", "http://localhost:5173"],
+    origin: ["http://127.0.0.1:5500", "http://localhost:5173", "http://192.168.1.164:5173"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
@@ -33,6 +33,6 @@ app.use((req, res) => {
     res.send(`<h1>404 - Not Found</h1>`)
 })
 
-app.listen(PORT, (req, res) => {
+app.listen(PORT, "0.0.0.0", (req, res) => {
     console.log(`Server listening on port http://localhost:${PORT} 🟢`);
 })
