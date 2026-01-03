@@ -23,7 +23,7 @@ authRouter.post("/login", async (req, res) => {
             res.status(400).send({ message: `Null or undefined idToken! 🔴` })
         }
         const decoded = await auth.verifyIdToken(idToken)
-        res.cookie("idToken", idToken, { hhtpOnly: true, secure: false })
+        res.cookie("idToken", idToken, { httpOnly: true, secure: false })
         res.status(200).send({ message: `Session logged successfully! 🟢` })
 
     } catch (error) {

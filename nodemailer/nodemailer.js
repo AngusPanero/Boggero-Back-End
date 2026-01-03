@@ -20,34 +20,23 @@ mailRouter.post("/sendemail", async (req,res) => {
         to: process.env.EMAIL, // A dónde querés que llegue el Mail
         subject: `Nueva Consulta De Una Propiedad`,
         html: `
-        <div style="
-            background-color: #141414;
-            color: #f0f0f0;
-            font-family: 'Alumni Sans Pinstripe', sans-serif;
-            padding: 2rem;
-            border: 3px solid #b39b6d;
-            border-radius: 8px;
-            max-width: 600px;
-            margin: 0 auto;
-        ">
-            <h1 style="color: #b39b6d; border-bottom: 1px solid #b39b6d; padding-bottom: 0.5rem;">
-                🏠 Nueva Consulta de Propiedad
-            </h1>
+            <div style="background:#faf7f5;color:#2e2e2e;font-family:'Alumni Sans Pinstripe',sans-serif;padding:2rem;border:2px solid #e6b7c2;border-radius:8px;max-width:600px;margin:0 auto;">
+                <h1 style="color:#d98aa5;border-bottom:1px solid #e6b7c2;padding-bottom:0.5rem;margin-bottom:1rem;">🏠 Nueva Consulta de Propiedad</h1>
 
-            <p><strong>Nombre:</strong> ${name.toUpperCase()} ${lastName.toUpperCase()}</p>
-            <p><strong>Teléfono:</strong> ${phone}</p>
-            <p><strong>Tipo de Operación:</strong> ${type}</p>
-            <p><strong>Email:</strong> ${email.toUpperCase()}</p>
-            <p><strong>Comentario:</strong><br />${comment}</p>
-            
-            <hr style="border: 1px solid #b39b6d; margin: 2rem 0;" />
+                <p><strong style="color:#d98aa5;">Nombre:</strong> ${name.toUpperCase()} ${lastName.toUpperCase()}</p>
+                <p><strong style="color:#d98aa5;">Teléfono:</strong> ${phone}</p>
+                <p><strong style="color:#d98aa5;">Tipo de Operación:</strong> ${type}</p>
+                <p><strong style="color:#d98aa5;">Email:</strong> ${email.toUpperCase()}</p>
+                <p><strong style="color:#d98aa5;">Comentario:</strong><br />${comment}</p>
 
-            <footer style="font-size: 1.1rem; color: #aaa; text-align: center;">
-                Sitio de consultas de <strong style="color: #b39b6d;">Boggero Propiedades</strong><br />
-                Buenos Aires - Argentina
-                Desarrollado por <strong style="color: #b39b6d;">DeepDev.</strong>
-            </footer>
-        </div>
+                <hr style="border:1px solid #e6b7c2;margin:2rem 0;" />
+
+                <footer style="font-size:1.1rem;color:#6a6a6a;text-align:center;">
+                    Sitio de consultas de <strong style="color:#d98aa5;">Boggero Propiedades</strong><br />
+                    Buenos Aires - Argentina<br />
+                    Desarrollado por <strong style="color:#d98aa5;">DeepDev.</strong>
+                </footer>
+            </div>
     `
     }
     try {
