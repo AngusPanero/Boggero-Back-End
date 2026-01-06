@@ -5,7 +5,6 @@ const { urlencoded } = require("body-parser")
 const cookieParser = require("cookie-parser")
 const dbConnection = require("./config/mongoose")
 const contactRouter = require("./routes/contactRouter")
-const loggedRouter = require("./routes/loggedRoute")
 const authRouter = require("./routes/authRoutes")
 const houseRouter = require("./routes/houseRouter")
 const openaiRouter = require("./routes/openaiRouter")
@@ -24,8 +23,7 @@ app.use(cors({
 
 dbConnection()
 
-app.use(authRouter)/* 
-app.use(loggedRouter) */
+app.use(authRouter)
 app.use(contactRouter)
 app.use(houseRouter)
 app.use(openaiRouter)

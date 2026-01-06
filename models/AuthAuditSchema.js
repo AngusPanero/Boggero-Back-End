@@ -1,10 +1,8 @@
 const mongoose = require("mongoose");
 
 const AuthAuditSchema = new mongoose.Schema({
-  // 🔐 Identidad
   uid: {
     type: String,
-    required: true,
     index: true
   },
   email: {
@@ -12,14 +10,13 @@ const AuthAuditSchema = new mongoose.Schema({
     required: true,
     index: true
   },
-
-  // 📌 Evento
   event: {
     type: String,
     enum: [
       "login",
       "logout",
       "token_refresh",
+      "login_failed",
       "session_expired",
       "forced_logout",
       "invalid_token"
@@ -27,8 +24,6 @@ const AuthAuditSchema = new mongoose.Schema({
     required: true,
     index: true
   },
-
-  // 🌍 Contexto
   ip: {
     type: String,
     index: true
@@ -36,22 +31,22 @@ const AuthAuditSchema = new mongoose.Schema({
   userAgent: String,
   country: String,
 
-  // ⏱️ Timestamp inmutable
   createdAt: {
     type: Date,
     default: Date.now,
     immutable: true,
     index: true
   },
-
-  // 🧠 Info extra (para incidentes)
   metadata: {
     type: mongoose.Schema.Types.Mixed,
     default: {}
-  }
+  },
+  attempts: {
+    type: Number,
+    default: 0
+  },
+  lastAttemptAt: Date
 
-}, {
-  versionKey: false
-});
+}, { versionKey: false });
 
 module.exports = mongoose.model("AuthAudit", AuthAuditSchema);
