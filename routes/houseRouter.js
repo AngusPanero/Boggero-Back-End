@@ -86,7 +86,7 @@ houseRouter.put("/update/:id", verifyToken, async (req, res) => {
         res.status(200).send({ message: `House updated successfully! 🟢`, house: updatedHouse })
     } catch (error) {
         console.error(`Error updating houseg! 🔴 ${error}`);
-        res.status(500).send({ message: `Error updating houseg! 🔴 ${error}` })
+        res.status(500).send({ message: `Error updating house! 🔴 ${error}` })
     }
 })
 
