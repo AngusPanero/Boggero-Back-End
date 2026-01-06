@@ -123,6 +123,48 @@ authRouter.post("/login-failed", async (req, res) => {
   }
 });
 
+authRouter.post("/unban-user", verifyToken, async (req, res) => {
+  const { uid } = req.body; 
+
+  if (!uid) {
+    return res.status(400).json({
+      message: "User UID is required"
+    });
+  }
+  try {
+    const user = await auth.getUser(uid);
+    await auth.setCustomUserClaims(uid, { banned: false });
+
+    await auth.revokeRefreshTokens(uid);
+
+    await AuthAuditSchema.findOneAndUpdate(
+      { uid, event: "login_failed" },
+      {
+        $set: {
+          attempts: 0,
+          lastAttemptAt: null
+        }
+      }
+    );
+
+    await AuthAuditSchema.create({
+      uid,
+      email: user.email,
+      event: "forced_logout",
+      metadata: {
+        action: "unban",
+        by: req.user.uid
+      }
+    });
+
+    return res.status(200).json({ message: "User unbanned successfully! 🟢"});
+
+  } catch (error) {
+    console.error("Unban error:", error);
+    return res.status(500).json({ message: "Error unbanning user" });
+  }
+});
+
 authRouter.get("/me", verifyToken, checkBanned, (req, res) => {
   res.status(200).json({
     uid: req.user.uid,
