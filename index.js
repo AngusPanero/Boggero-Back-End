@@ -16,7 +16,7 @@ app.use(urlencoded({ extended: true }))
 app.use(express.json())
 
 app.use(cors({
-    origin: ["http://127.0.0.1:5500", "http://localhost:5173", "http://192.168.1.164:5173"],
+    origin: ["http://127.0.0.1:5500", "http://localhost:5173", "http://192.168.1.144:5173"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));

@@ -10,7 +10,7 @@ authRouter.post("/register", async (req, res) => {
     const { email, password } = req.body
     try {
         if(!email || !password){
-            res.status(400).send({ message: `All fields are required to create a user! 🔴` })
+            res.status(400).send({ message: `All fields are required to create an user! 🔴` })
         }
         await auth.createUser({ email, password })
         res.status(201).send({ message: `User created successfully! 🟢` })
@@ -22,20 +22,15 @@ authRouter.post("/register", async (req, res) => {
 
 authRouter.post("/login", loginLimiter, async (req, res) => {
   const { idToken } = req.body;
-
+  
   try {
     const decoded = await auth.verifyIdToken(idToken);
-    console.log("BANNED?", decoded.banned);
+    console.log("DECODED", decoded);
 
     if (!decoded.banned) {
       await AuthAuditSchema.findOneAndUpdate(
         { email: decoded.email, event: "login_failed" },
-        {
-          $set: {
-            attempts: 0,
-            lastAttemptAt: null
-          }
-        }
+        { $set: { attempts: 0, lastAttemptAt: null }}
       );
     }
 
@@ -78,6 +73,11 @@ authRouter.post("/logout", async (req, res) => {
       });
     }
 
+    res.clearCookie("idToken", {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: false
+    });
     return res.status(200).json({ message: "Logout audited 🟢" });
 
   } catch (error) {
@@ -101,7 +101,7 @@ authRouter.post("/login-failed", async (req, res) => {
         $inc: { attempts: 1 },
         $set: { lastAttemptAt: now }
       },
-      { upsert: true, new: true }
+      { upsert: true, new: true } // este comando lo crea ni no existe anteriormente
     );
     if (attempt.attempts >= 5) {
       const user = await auth.getUserByEmail(email);
@@ -113,7 +113,7 @@ authRouter.post("/login-failed", async (req, res) => {
       });
 
       await auth.revokeRefreshTokens(user.uid);
-      return res.status(200).json({ message: "User banned due to too many failed attempts 🔴" });
+      return res.status(200).json({ message: "User banned due to too many failed attempts 🔴", banned: true });
     }
     return res.status(200).json({ message: "Failed login attempt recorded 🟡", attempts: attempt.attempts }); 
 

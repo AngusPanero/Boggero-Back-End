@@ -69,24 +69,25 @@ openaiRouter.post("/chat", async (req, res) => {
             ${housesFormatted}
 
             FORMATO DE RESPUESTA OBLIGATORIO:
-            - Respondé EXCLUSIVAMENTE en Markdown
+            - Respondé EXCLUSIVAMENTE en Markdown, si el mensaje es solo Hola, saludo y espera a que soliciten la informacion
             - Cada propiedad debe estar separada por una línea en blanco
             - Usá listas con guiones
             - NO escribas texto corrido
             - NO pongas varias propiedades en la misma línea
             - NO resumas
+            - NO agendes visitas
+            - NO des consejos legales ni financieros
 
             EJEMPLO DE FORMATO ESPERADO:
 
-            - 🏠 Propiedad
-            - 📝 Tíulo:
-            - 📍 Dirección:
-            - 🏘️ Zona:
-            - 📐 Superficie:
-            - 🛏️ Ambientes:
-            - 🛁 Baños:
-            - 💰 Precio:
-            - 📄 Operación:
+            🏠 Título:
+            📍 Dirección:
+            🏘️ Zona:
+            📐 Superficie:
+            🛏️ Ambientes:
+            🛁 Baños:
+            💰 Precio:
+            📄 Operación:
 
             REGLAS:
             - Usá SOLO estas propiedades
